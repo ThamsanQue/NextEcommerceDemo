@@ -7,44 +7,65 @@ import {
   AiOutlineShopping,
 } from "react-icons/ai";
 import { TiDeleteOutline } from "react-icons/ti";
-import toast from "react-hot-toast";
-import { useStateContext } from "../context/StateContext";
+import { useStateValue } from "../context/StateContext";
 import { urlFor } from "../lib/client";
+import Subtotal from "./Subtotal";
 
 const Cart = () => {
   const cartRef = useRef();
-  const {
-    totalPrice,
-    totalQuantities,
-    cartItems,
-    setShowCart,
-    toggleCartItemQuantity,
-    onRemove,
-  } = useStateContext();
+  const [{ cart }, dispatch] = useStateValue();
 
-  console.log(totalQuantities);
+  const toggleCart = () => {
+    dispatch({
+      type: "SHOW_CART",
+      showCart: false,
+    });
+  };
+  const removeFromCart = (id) => {
+    dispatch({
+      type: "REMOVE_FROM_CART",
+      id: id,
+    });
+  };
+
+  const reduction = (id) => {
+    cart.forEach((item) => {
+      if (item.id === id) {
+        item.qty === 1 ? (item.qty = 1) : (item.qty -= 1);
+      }
+    });
+    dispatch({
+      type: "UPDATE_CART",
+      cart: cart,
+    });
+  };
+
+  const increase = (id) => {
+    cart.forEach((item) => {
+      if (item.id === id) {
+        item.qty += 1;
+      }
+    });
+    dispatch({
+      type: "UPDATE_CART",
+      cart: cart,
+    });
+  };
+
   return (
     <div className="cart-wrapper" ref={cartRef}>
       <div className="cart-container">
-        <button
-          type="button"
-          className="cart-heading"
-          onClick={() => setShowCart(false)}
-        >
+        <button type="button" className="cart-heading" onClick={toggleCart}>
           <AiOutlineLeft />
           <span className="heading">Your Cart</span>
-          <span className="cart-num-items">({totalQuantities} items)</span>
+          <span className="cart-num-items">({cart.length} items)</span>
         </button>
-        {cartItems.length < 1 ? (
+        {cart.length < 1 ? (
           <div className="empty-cart">
             <AiOutlineShopping size={150} />
             <h3>Your shopping Cart is empty</h3>
             <Link href="/">
-              <button
-                type="button"
-                onClick={() => setShowCart(false)}
-                className="btn"
-              >
+              <button type="button" onClick={toggleCart} className="btn">
                 Continue Shopping
               </button>
             </Link>
@@ -52,7 +73,7 @@ const Cart = () => {
         ) : (
           <>
             <div className="product-container">
-              {cartItems.map((item) => (
+              {cart.map((item) => (
                 <div className="product" key={item._id}>
                   <img
                     src={urlFor(item?.image[0])}
@@ -69,20 +90,16 @@ const Cart = () => {
                         <p className="quantity-desc">
                           <span
                             className="minus"
-                            onClick={() =>
-                              toggleCartItemQuantity(item._id, "dec")
-                            }
+                            onClick={() => reduction(item.id)}
                           >
                             <AiOutlineMinus />
                           </span>
                           <span className="num" onClick>
-                            {item.quantity}
+                            {item.qty}
                           </span>
                           <span
                             className="plus"
-                            onClick={() =>
-                              toggleCartItemQuantity(item._id, "inc")
-                            }
+                            onClick={() => increase(item.id)}
                           >
                             <AiOutlinePlus />
                           </span>
@@ -91,7 +108,7 @@ const Cart = () => {
                       <button
                         type="button"
                         className="remove-item"
-                        onClick={() => onRemove(item)}
+                        onClick={() => removeFromCart(item.id)}
                       >
                         <TiDeleteOutline />
                       </button>
@@ -103,7 +120,7 @@ const Cart = () => {
             <div className="cart-bottom">
               <div className="total">
                 <h3>Subtotal:</h3>
-                <h3>R{totalPrice}</h3>
+                <Subtotal />
               </div>
               <div className="btn-container">
                 <button type="button" className="btn" onClick="">

@@ -1,16 +1,17 @@
 import { Toaster } from "react-hot-toast";
 import { Layout } from "../components";
-import { StateContext } from "../context/StateContext";
+import reducer, { initialState } from "../context/Reducer";
+import { StateProvider } from "../context/StateContext";
 import "../styles/globals.css";
 
 function MyApp({ Component, pageProps }) {
   return (
-    <StateContext>
+    <StateProvider initialState={initialState} reducer={reducer}>
       <Layout>
         <Toaster />
         <Component {...pageProps} />
       </Layout>
-    </StateContext>
+    </StateProvider>
   );
 }
 
