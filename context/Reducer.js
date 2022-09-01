@@ -1,5 +1,6 @@
+import Cookies from "js-cookie";
 export const initialState = {
-  cart: [],
+  cart: Cookies.get("cart") ? JSON.parse(Cookies.get("cart")) : [],
   showCart: false,
 };
 
@@ -18,6 +19,7 @@ const reducer = (state, action) => {
       };
 
     case "ADD_TO_CART":
+      Cookies.set("cart", JSON.stringify([...state.cart]));
       return {
         ...state,
         cart: [...state.cart, action.item],
@@ -36,6 +38,7 @@ const reducer = (state, action) => {
           `Cant remove the product (id: ${action.id})as its not in cart`
         );
       }
+      Cookies.set("cart", JSON.stringify(newCart));
 
       return {
         ...state,

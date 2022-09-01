@@ -1,6 +1,5 @@
 import { createContext, useContext, useReducer } from "react";
 import { toast } from "react-hot-toast";
-import Cookies from "js-cookie";
 
 // Prepares the datalayer
 export const StateContext = createContext();
