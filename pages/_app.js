@@ -1,16 +1,23 @@
 import { Toaster } from "react-hot-toast";
-import { Layout } from "../components";
 import reducer, { initialState } from "../context/Reducer";
 import { StateProvider } from "../context/StateContext";
 import "../styles/globals.css";
+import dynamic from "next/dynamic";
+
+const DynamicLayout = dynamic(
+  () => import("../components").then((mod) => mod.Layout),
+  {
+    ssr: false,
+  }
+);
 
 function MyApp({ Component, pageProps }) {
   return (
     <StateProvider initialState={initialState} reducer={reducer}>
-      <Layout>
+      <DynamicLayout>
         <Toaster />
         <Component {...pageProps} />
-      </Layout>
+      </DynamicLayout>
     </StateProvider>
   );
 }
