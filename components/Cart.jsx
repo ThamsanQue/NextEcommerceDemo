@@ -123,9 +123,11 @@ const Cart = () => {
                 <Subtotal />
               </div>
               <div className="btn-container">
-                <button type="button" className="btn" onClick="">
-                  Proceed to checkout
-                </button>
+                <Link href="/checkout">
+                  <button type="button" className="btn" onClick={toggleCart}>
+                    Proceed to checkout
+                  </button>
+                </Link>
               </div>
             </div>
           </>
