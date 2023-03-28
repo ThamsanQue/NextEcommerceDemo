@@ -16,7 +16,7 @@ const Navbar = () => {
   return (
     <div className="navbar-container">
       <p className="logo">
-        <Link href="/">Sanity Store</Link>
+        <Link href="/">Evetech</Link>
       </p>
       <button type="button" className="cart-icon" onClick={toggleCart}>
         <AiOutlineShopping />
