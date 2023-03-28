@@ -9,6 +9,10 @@ const Footer = () => {
         <AiFillInstagram />
         <AiOutlineTwitter />
       </p>
+      <a href="https://thamsanqaj-fea43.web.app/" target="_blank">
+        {" "}
+        Thamsanqa J
+      </a>
     </div>
   );
 };
