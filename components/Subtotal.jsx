@@ -1,5 +1,5 @@
 import React from "react";
-import CurrencyFormat from "react-currency-format";
+import { NumericFormat } from "react-number-format";
 import { getCartTotal } from "../context/Reducer";
 import { useStateValue } from "../context/StateContext";
 
@@ -8,12 +8,12 @@ const Subtotal = () => {
 
   return (
     <div>
-      <CurrencyFormat
+      <NumericFormat
         renderText={(value) => <h3>{value}</h3>}
-        decimalScale={2}
         value={getCartTotal(cart)}
+        allowLeadingZeros
+        thousandSeparator=","
         displayType={"text"}
-        thousandSeparator={true}
         prefix={"R"}
       />
     </div>
