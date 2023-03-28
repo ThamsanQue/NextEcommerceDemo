@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 
 import { urlFor } from "../lib/client";
+import Image from "next/image";
 
 const FooterBanner = ({
   footerBanner: {
@@ -26,15 +27,21 @@ const FooterBanner = ({
           <h3>{largeText2}</h3>
           <p>{saleTime}</p>
         </div>
-        {/* <div className="right">
+        <div className="right">
           <p>{smallText}</p>
           <h3>{midText}</h3>
           <p>{desc}</p>
           <Link href={`/product/${product}`}>
             <button type="button">{buttonText}</button>
           </Link>
-        </div> */}
-        <img src={urlFor(image)} alt="" className="footer-banner-image" />
+        </div>
+        <Image
+          src={urlFor(image).url()}
+          alt="Product Image"
+          className="footer-banner-image"
+          width={400}
+          height={400}
+        />
       </div>
     </div>
   );

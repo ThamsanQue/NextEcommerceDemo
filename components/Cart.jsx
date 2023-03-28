@@ -10,6 +10,7 @@ import { TiDeleteOutline } from "react-icons/ti";
 import { useStateValue } from "../context/StateContext";
 import { urlFor } from "../lib/client";
 import Subtotal from "./Subtotal";
+import Image from "next/image";
 
 const Cart = () => {
   const cartRef = useRef();
@@ -75,10 +76,12 @@ const Cart = () => {
             <div className="product-container">
               {cart.map((item) => (
                 <div className="product" key={item._id}>
-                  <img
-                    src={urlFor(item?.image[0])}
-                    alt=""
+                  <Image
+                    src={urlFor(item?.image[0]).url()}
+                    alt="Product Image"
                     className="cart-product-image"
+                    width={200}
+                    height={200}
                   />
                   <div className="item-desc">
                     <div className="flex top">

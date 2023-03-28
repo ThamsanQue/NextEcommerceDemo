@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { urlFor } from "../lib/client";
 
@@ -8,10 +9,12 @@ const HeroBanner = ({ heroBanner }) => {
         <p className="beats-solo">{heroBanner.smallText}</p>
         <h3>{heroBanner.midText}</h3>
         <h1>{heroBanner.largeText1}</h1>
-        <img
-          src={urlFor(heroBanner.image)}
-          alt="headphones"
+        <Image
+          src={urlFor(heroBanner.image).url()}
+          alt="Desktop"
           className="hero-banner-image"
+          width={300}
+          height={300}
         />
         <div>
           <Link href={`/product/${heroBanner.product}`}>

@@ -9,6 +9,7 @@ import {
 import { Product } from "../../components";
 import { useStateValue } from "../../context/StateContext";
 import { toast } from "react-hot-toast";
+import Image from "next/image";
 
 const ProductDetails = ({ product, products }) => {
   const { image, name, details, price, _id } = product;
@@ -38,13 +39,13 @@ const ProductDetails = ({ product, products }) => {
 
   const reduction = (id) => {
     if (_id === id) {
-      qty === 1 ? (qty = 1) : setQty((qty -= 1));
+      qty === 1 ? (prev = 1) : setQty((prev -= 1));
     }
   };
 
   const increase = (id) => {
     if (_id === id) {
-      setQty((qty += 1));
+      setQty((prev += 1));
     }
   };
 
@@ -54,19 +55,26 @@ const ProductDetails = ({ product, products }) => {
       <div className="product-detail-container">
         <div>
           <div className="image-container">
-            <img
-              src={urlFor(image && image[index])}
+            <Image
+              src={urlFor(image && image[index]).url()}
               className="product-detail-image"
+              alt="Product Image"
+              width={300}
+              height={300}
             />
           </div>
           <div className="small-images-container">
             {image?.map((item, i) => (
-              <img
-                src={urlFor(item)}
+              <Image
+                src={urlFor(item).url()}
                 className={
                   i === index ? "small-image selected-image" : "small-image"
                 }
                 onMouseEnter={() => setIndex(i)}
+                key={i}
+                alt="Product Image"
+                width={200}
+                height={200}
               />
             ))}
           </div>
